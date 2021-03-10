@@ -50,8 +50,7 @@ class User
         }
         return false;
     }
-
-
+    
     public function data()
     {
         return $this->_data;
@@ -66,4 +65,54 @@ class User
     {
         return $this->_isLoggedIn;
     }
+    public static function checkEmail($cin, $email)
+    {
+        if ($cin && $email) {
+            $sql = "SELECT cin
+                    FROM Utilisateur
+                    WHERE cin != ?
+                    AND email = ?";
+            $dataPas = DB::getInstance()->query($sql, [$cin, $email]);
+            return $dataPas->count() ? true : false;
+        }
+        return false;
+    }
+    public static function checkUserName($cin, $username)
+    {
+        if ($cin && $username) {
+            $sql = "SELECT cin
+                    FROM Utilisateur
+                    WHERE cin != ?
+                    AND username = ?";
+            $dataPas = DB::getInstance()->query($sql, [$cin, $username]);
+            return $dataPas->count() ? true : false;
+        }
+        return false;
+    }
+    public static function isAlreadySignedUp($cin)
+    {
+        if ($cin) {
+            $sql = "SELECT cin
+                    FROM Utilisateur
+                    WHERE cin = ?
+                    AND `password` is not null";
+            $dataPas = DB::getInstance()->query($sql, [$cin]);
+            return $dataPas->count() ? true : false;
+        }
+        return false;
+    }
+    public static function signup($cin,$nom,$prenom,$datenaiss,$tele, $email, $username, $password)
+    {
+        $hashed_password=password_hash($password,PASSWORD_DEFAULT);
+        if ($cin && $email && $username && $password) {
+            $data = DB::getInstance()->query("INSERT INTO `utilisateur` (`cin`, `nom`, `prenom`,
+                                                   `date_naissance`,`password`, `telephone`, 
+                                                   `email`, `username`, `imagepath`) 
+                                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                                       ",array($cin, $nom, $prenom, $datenaiss, $hashed_password, $tele, $email, $username, 'avatar.jpg' ));
+
+            return ($data->error());
+        }
+    }
+
 }
