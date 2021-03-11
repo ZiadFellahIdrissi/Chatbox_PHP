@@ -43,7 +43,7 @@ class User
     {
         $user = $this->find($username);
         if ($user) {
-            if ($password == $this->data()->password) {
+            if (password_verify($password , $this->data()->password)) {
                 Session::put($this->_sessionName, $this->data()->username);
                 return true;
             }
