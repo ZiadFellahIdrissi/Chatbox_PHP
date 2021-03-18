@@ -43,7 +43,7 @@ if (!$User->isLoggedIn()) {
           </div>
         </div>
         <!-- Chat Box-->
-        <div class="col-7 px-0 conv">
+        <div class="col-7 px-0 conv bg-white">
 
         </div>
       </div>
@@ -55,31 +55,27 @@ if (!$User->isLoggedIn()) {
       $(document).ready(function() {
         let cin = $("#idPerson").val()
         let talkwith = $('.chat').attr("att");
-        // $.ajax({
-        //   url: "./messages/getchats.php",
-        //   method: "GET",
-        //   data: {
-        //     cin:cin
-        //   },
-        //   dataType: "text",
-        //   // beforeSend: function() {
-        //   //   $("#spinner").show();
-        //   // },
-        //   // complete: function() {
-        //   //   $("#spinner").hide();
-        //   // },
-        //   success: function(data) {
-        //     $('.messages-box').html(data);
-        //   }
-        // });
+        $.ajax({
+          url: "./messages/getchats.php",
+          method: "GET",
+          data: {
+            cin:cin
+          },
+          dataType: "text",
+          // beforeSend: function() { // still preparing the spinner 
+          //   $("#spinner").show();
+          // },
+          // complete: function() {
+          //   $("#spinner").hide();
+          // },
+          success: function(data) {
+            $('.messages-box').html(data);
+          }
+        });
         $("#test").click(function() {
           $('.messages-box').load("./messages/getchats.php?cin=" + cin)
           console.log(talkwith);
         });
-
-       
-      
-
 
       });
     </script>

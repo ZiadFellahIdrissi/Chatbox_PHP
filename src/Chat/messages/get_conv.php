@@ -58,9 +58,9 @@ foreach ($resultats->results() as $row) {
 <input type="hidden" id="talkwith" value="<?php echo $talkwith ?>">
 
 <script>
+    var talkwith = $("#talkwith").val();
+    var cin = $("#idPerson").val();
     $(".btnsend").click(function() {
-        let talkwith = $("#talkwith").val();
-        let cin = $("#idPerson").val();
         let msg = $(".msgsend").val();
         $.ajax({
             url: "./messages/send_message.php",
@@ -82,6 +82,15 @@ foreach ($resultats->results() as $row) {
                 $('.messages-box').load("./messages/getchats.php?cin=" + cin);
             }
         });
-        // console.log(talkwith);
     });
+    $('.chat-box').animate({
+        scrollTop: 9999
+    }, 0);
+
+    // setInterval(() => {
+    //     $('.conv').load("./messages/get_conv.php?cin=" + cin + "&talkwith=" + talkwith);
+    //     $('.messages-box').load("./messages/getchats.php?cin=" + cin);
+    // }, 2000);
+
+
 </script>
