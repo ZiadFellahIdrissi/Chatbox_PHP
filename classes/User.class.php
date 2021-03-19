@@ -114,5 +114,10 @@ class User
             return ($data->error());
         }
     }
-
+    public function changestatut($isonline){
+        $sql="  UPDATE utilisateur 
+                set isonline = ?
+                where cin = ? ";
+        $this->_db->query($sql, [$isonline,$this->data()->cin]);
+    }
 }
